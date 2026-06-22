@@ -41,6 +41,8 @@ if uploaded_file:
 
     X = df[feature_cols]
 
+    st.write("Missing values:")
+    st.write(X.isnull().sum())
     X_scaled = scaler.transform(X)
 
     predictions = model.predict(X_scaled)
