@@ -13,7 +13,16 @@ uploaded_file = st.file_uploader("Upload CSV", type=["csv"])
 
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
+    
+if 'satisfaction' in df.columns:
+    df = df.drop(columns=['satisfaction'])
 
+if 'Unnamed: 0' in df.columns:
+    df = df.drop(columns=['Unnamed: 0'])
+
+if 'id' in df.columns:
+    df = df.drop(columns=['id'])
+    
     # Apply saved encoders
     for col in ['Gender', 'Customer Type', 'Type of Travel', 'Class']:
         df[col] = encoders[col].transform(df[col])
@@ -45,8 +54,7 @@ if uploaded_file:
     X = df[feature_cols]
     df['Arrival Delay in Minutes'] = df['Arrival Delay in Minutes'].fillna(
     df['Arrival Delay in Minutes'].median())
-    st.write("Missing values:")
-    st.write(X.isnull().sum())
+
     X_scaled = scaler.transform(X)
 
     predictions = model.predict(X_scaled)
