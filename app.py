@@ -20,8 +20,8 @@ df = df.drop(columns=['id', 'satisfaction'], errors='ignore')
 df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
     
     # Apply saved encoders
-    for col in ['Gender', 'Customer Type', 'Type of Travel', 'Class']:
-        df[col] = encoders[col].transform(df[col])
+for col in ['Gender', 'Customer Type', 'Type of Travel', 'Class']:
+    df[col] = encoders[col].transform(df[col])
 
     feature_cols = [
         'Gender', 'Customer Type', 'Age',
