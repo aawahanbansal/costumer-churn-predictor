@@ -17,6 +17,9 @@ if uploaded_file:
     df = df.drop(columns=['id', 'satisfaction'], errors='ignore')
 # Remove unnamed index column if present
     df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+
+    df['Arrival Delay in Minutes'] = df['Arrival Delay in Minutes'].fillna(
+        df['Arrival Delay in Minutes'].median())
     
     # Apply saved encoders
     for col in ['Gender', 'Customer Type', 'Type of Travel', 'Class']:
@@ -44,9 +47,8 @@ if uploaded_file:
     ]
     
     X = df[feature_cols]
-    df['Arrival Delay in Minutes'] = df['Arrival Delay in Minutes'].fillna(
-    df['Arrival Delay in Minutes'].median())
-
+# Fill any remaining NaNs
+    X = X.fillna(X.median(numeric_only=True))
     X_scaled = scaler.transform(X)
 
     predictions = model.predict(X_scaled)
