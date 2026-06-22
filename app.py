@@ -14,14 +14,10 @@ uploaded_file = st.file_uploader("Upload CSV", type=["csv"])
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
     
-if 'satisfaction' in df.columns:
-    df = df.drop(columns=['satisfaction'])
-
-if 'Unnamed: 0' in df.columns:
-    df = df.drop(columns=['Unnamed: 0'])
-
-if 'id' in df.columns:
-    df = df.drop(columns=['id'])
+# Remove unnecessary columns
+df = df.drop(columns=['id', 'satisfaction'], errors='ignore')
+# Remove unnamed index column if present
+df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
     
     # Apply saved encoders
     for col in ['Gender', 'Customer Type', 'Type of Travel', 'Class']:
