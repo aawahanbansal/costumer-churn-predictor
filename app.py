@@ -42,6 +42,8 @@ if uploaded_file:
     X = df[feature_cols]
     df['Arrival Delay in Minutes'] = df['Arrival Delay in Minutes'].fillna(
     df['Arrival Delay in Minutes'].median())
+    st.write("Missing values:")
+    st.write(X.isnull().sum())
     X_scaled = scaler.transform(X)
 
     predictions = model.predict(X_scaled)
