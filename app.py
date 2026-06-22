@@ -38,7 +38,10 @@ if uploaded_file:
         'Departure Delay in Minutes',
         'Arrival Delay in Minutes'
     ]
-
+    
+    for col in ['Gender', 'Customer Type', 'Type of Travel', 'Class']:
+    print(df[col].unique())
+    
     X = df[feature_cols]
     df['Arrival Delay in Minutes'] = df['Arrival Delay in Minutes'].fillna(
     df['Arrival Delay in Minutes'].median())
